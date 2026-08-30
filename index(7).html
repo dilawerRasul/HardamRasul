@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hardam Rasul — English Educator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root{
+    --cream:#efe8d6;
+    --violet:#7d27fc;
+    --coral:#fe673a;
+    --ink:#171310;
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; }
+  body{
+    margin:0;
+    min-height:100dvh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:28px;
+    background:var(--ink);
+    font-family:'Space Grotesk', Arial, sans-serif;
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+
+  [lang="ku"]{
+    font-family:'Noto Naskh Arabic', serif;
+    direction:rtl;
+    text-align:right;
+    unicode-bidi:isolate;
+  }
+
+  a:focus-visible, button:focus-visible{
+    outline:3px solid var(--coral);
+    outline-offset:2px;
+  }
+
+  .poster{
+    position:relative;
+    width:100%;
+    max-width:660px;
+    background:var(--cream);
+    border:3px solid var(--ink);
+    box-shadow:12px 12px 0 var(--coral);
+  }
+
+  .header{
+    position:relative;
+    background:var(--violet);
+    border-bottom:3px solid var(--ink);
+    padding:38px 28px 34px;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:18px;
+  }
+  @media (min-width:680px){
+    .header{
+      flex-direction:row;
+      align-items:center;
+      justify-content:space-between;
+      padding:44px 40px;
+    }
+  }
+
+  .header-text{ display:flex; flex-direction:column; gap:14px; }
+
+  .badge{
+    display:inline-block;
+    background:var(--coral);
+    border:3px solid var(--ink);
+    color:var(--ink);
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    padding:6px 12px;
+    transform:rotate(-2deg);
+    width:fit-content;
+  }
+
+  h1.name{
+    margin:0;
+    font-weight:700;
+    font-size:clamp(38px, 8vw, 62px);
+    line-height:0.98;
+    color:var(--cream);
+    letter-spacing:-0.01em;
+  }
+
+  .photo-frame{
+    position:relative;
+    flex-shrink:0;
+    width:clamp(130px, 32vw, 190px);
+    align-self:center;
+  }
+  .photo-shadow{
+    position:absolute;
+    inset:0;
+    background:var(--ink);
+    transform:translate(9px, 9px);
+  }
+  .photo-frame img{
+    position:relative;
+    display:block;
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    object-position:50% 22%;
+    border:3px solid var(--ink);
+    background:var(--cream);
+  }
+
+  .content{
+    padding:32px 28px 36px;
+  }
+  @media (min-width:680px){
+    .content{ padding:40px 40px 44px; }
+  }
+
+  .role{
+    margin:0;
+    font-weight:600;
+    font-size:clamp(14.5px, 1.7vw, 17px);
+    color:var(--ink);
+  }
+
+  .divider{
+    display:block;
+    width:52px; height:7px;
+    background:var(--coral);
+    border:2px solid var(--ink);
+    margin:18px 0 22px;
+  }
+
+  .bio-block{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    margin-bottom:28px;
+  }
+  .bio{
+    margin:0;
+    font-size:clamp(14.5px, 1.5vw, 16px);
+    line-height:1.7;
+    max-width:56ch;
+  }
+  .bio-ku{
+    font-size:clamp(15px, 1.6vw, 17px);
+    line-height:2;
+    max-width:56ch;
+    margin-left:auto;
+  }
+
+  .links-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-bottom:16px;
+  }
+
+  .link-pill{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:13px 14px;
+    border:3px solid var(--ink);
+    box-shadow:4px 4px 0 var(--ink);
+    text-decoration:none;
+    font-weight:700;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:0.02em;
+    color:var(--cream);
+    background:var(--violet);
+    transition:transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .link-pill:nth-child(even){ background:var(--coral); }
+  .link-pill i{ width:16px; text-align:center; font-size:15px; }
+  .link-pill:hover, .link-pill:focus-visible{
+    transform:translate(4px, 4px);
+    box-shadow:0 0 0 var(--ink);
+  }
+  .link-pill.wide{ grid-column:1 / -1; justify-content:center; }
+
+  .primary-link{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:16px 20px;
+    border:3px solid var(--coral);
+    box-shadow:6px 6px 0 var(--coral);
+    background:var(--ink);
+    color:var(--cream);
+    text-decoration:none;
+    font-weight:700;
+    font-size:14.5px;
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+    transition:transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .primary-link svg{ width:18px; height:18px; stroke:var(--cream); }
+  .primary-link:hover, .primary-link:focus-visible{
+    transform:translate(4px, 4px);
+    box-shadow:0 0 0 var(--coral);
+  }
+
+  @media (max-width:380px){
+    .header{ padding:32px 20px 28px; }
+    .content{ padding:26px 20px 30px; }
+  }
+</style>
+</head>
+<body>
+
+<main class="poster">
+  <div class="header">
+    <div class="header-text">
+      <span class="badge">Educator &amp; Mentor</span>
+      <h1 class="name">Hardam<br>Rasul</h1>
+    </div>
+    <div class="photo-frame">
+      <div class="photo-shadow"></div>
+      <img src="hardam-photo.jpg" alt="Portrait of Hardam Rasul">
+    </div>
+  </div>
+
+  <div class="content">
+    <p class="role">12th Grade Wizari English Teacher — Bizhara High School</p>
+    <span class="divider"></span>
+
+    <div class="bio-block">
+      <p class="bio" lang="en">Hardam Rasul teaches 12th-grade English at Bizhara High School, preparing Wizari students for one of the most important exams of their academic lives. With over a decade in education — and as a tutor at Student Academy — he has guided countless students toward exam success. He is also a co-founder of Masterly, a digital space for growth and learning, carrying his approach to teaching beyond the classroom.</p>
+      <p class="bio bio-ku" lang="ku" dir="rtl">هەردەم ڕەسوڵ مامۆستایێ ئینگلیزیێ پۆلا ١٢ ئە لی دیبستانا بژارا، کو خوەندەکارێن ویزاریێ بۆ یەک ژ گرنگترین ئیمتیحانێن ژیانا وان یا ئەکادیمی ئامادە دکە. بی زێدەتری دەه سالان ئەزموونا خوە یا پەروەردەهیێ — و وەک مامۆستایێ تایبەت لی ستودێنت ئەکادمی — وی گەلەک خوەندەکار گەهاندنە سەر ڕێیا سەرکەفتنێ. ئەو هەروەها هەڤ-دامەزرێنەرێ ماستەرلی یە، جهەکی دیجیتال ژ بۆ گەشەدان و فێربوونێ، کو هەلوێستا خوە یا مامۆستاتیێ ڕادهینیتە دەرڤەیی دەرسخانێ.</p>
+    </div>
+
+    <div class="links-grid">
+      <a class="link-pill" href="https://www.instagram.com/hardamrasul" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <i class="fa-brands fa-instagram"></i>
+        Instagram
+      </a>
+      <a class="link-pill" href="https://www.tiktok.com/@hardamrasul5" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+        <i class="fa-brands fa-tiktok"></i>
+        TikTok
+      </a>
+      <a class="link-pill" href="https://snapchat.com/t/2jhlFfmd" target="_blank" rel="noopener noreferrer" aria-label="Snapchat">
+        <i class="fa-brands fa-snapchat"></i>
+        Snapchat
+      </a>
+      <a class="link-pill" href="https://www.youtube.com/@HardamRasul" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+        <i class="fa-brands fa-youtube"></i>
+        YouTube
+      </a>
+      <a class="link-pill wide" href="https://t.me/hardamrasul" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+        <i class="fa-brands fa-telegram"></i>
+        Telegram
+      </a>
+    </div>
+
+    <a class="primary-link" href="https://masterlyiq.com" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5 2.5 9.5 12 14l9.5-4.5L12 5Z"/><path d="M6.5 11.7V16c0 1.4 2.4 2.5 5.5 2.5s5.5-1.1 5.5-2.5v-4.3"/><path d="M21.5 9.5v5"/></svg>
+      Visit Masterly
+    </a>
+  </div>
+</main>
+
+</body>
+</html>
