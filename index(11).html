@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hardam Rasul — English Educator</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  @font-face{
+    font-family:'Oli Grotesk L';
+    src:url('Oli_Grotesk_L_Regular.ttf') format('truetype');
+    font-weight:400;
+    font-style:normal;
+    font-display:swap;
+  }
+  @font-face{
+    font-family:'Oli Grotesk L';
+    src:url('Oli_Grotesk_L_Bold.ttf') format('truetype');
+    font-weight:700;
+    font-style:normal;
+    font-display:swap;
+  }
+  @font-face{
+    font-family:'Peshang Des';
+    src:url('Peshang_Des.ttf') format('truetype');
+    font-weight:400;
+    font-style:normal;
+    font-display:swap;
+  }
+  :root{
+    --cream:#efe8d6;
+    --pink:#fd97fb;
+    --lime:#eeff4f;
+    --turquoise:#1fe6d1;
+    --coral:#fe673a;
+    --violet:#7d27fc;
+    --ink:#171310;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    font-family:'Oli Grotesk L', Arial, sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    overflow-x:hidden;
+  }
+  [lang="ku"]{ font-family:'Peshang Des', serif; direction:rtl; text-align:right; unicode-bidi:isolate; }
+  a:focus-visible{ outline:3px solid var(--ink); outline-offset:2px; }
+  section{ position:relative; }
+
+  /* ---- repeatable reveal-on-scroll ---- */
+  .reveal{
+    position:relative; z-index:1;
+    opacity:0;
+    transform:translateY(26px);
+    transition:opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+
+  @media (prefers-reduced-motion: no-preference){
+    .hero-photo{ animation:fadeIn 1s ease-out both; }
+    .hero-text > *{ animation:fadeUp 0.9s ease-out both; }
+    .hero-text .badge{ animation-delay:0.05s; }
+    .hero-text .name{ animation-delay:0.18s; }
+    .hero-text .role{ animation-delay:0.32s; }
+    .badge{ animation:fadeUp 0.9s ease-out both, badgeFloat 5s ease-in-out 1s infinite; }
+    .float-shape{ animation:floatShape var(--dur,6s) ease-in-out infinite; }
+    .seal-rotate{ animation:sealSpin 18s linear infinite; }
+    .masterly-spin{ animation:sealSpin 12s linear infinite; }
+    .blob{ animation:blobDrift var(--dur,14s) ease-in-out infinite; }
+    .marquee-track{ animation:marqueeScroll 20s linear infinite; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .marquee-track{ animation:none; }
+  }
+  @keyframes fadeIn{ from{ opacity:0; } to{ opacity:1; } }
+  @keyframes fadeUp{ from{ opacity:0; transform:translateY(18px); } to{ opacity:1; transform:translateY(0); } }
+  @keyframes badgeFloat{ 0%,100%{ transform:rotate(-2deg); } 50%{ transform:rotate(-4deg); } }
+  @keyframes floatShape{ 0%,100%{ transform:translateY(0) rotate(0deg); } 50%{ transform:translateY(-14px) rotate(12deg); } }
+  @keyframes sealSpin{ from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }
+  @keyframes blobDrift{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(20px,-24px) scale(1.08); } }
+  @keyframes marqueeScroll{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+
+  .blob{ position:absolute; border-radius:50%; filter:blur(70px); pointer-events:none; z-index:0; }
+
+  /* ---- HERO ---- */
+  .hero{ display:flex; flex-direction:column; min-height:100dvh; }
+  @media (min-width:760px){ .hero{ flex-direction:row; } }
+
+  .hero-photo{ order:1; min-height:44vh; flex:1 1 50%; position:relative; overflow:hidden; }
+  .hero-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  .float-shape{ position:absolute; z-index:1; --dur:6s; }
+
+  .hero-text{
+    order:2; flex:1 1 50%;
+    background:var(--ink); color:var(--cream);
+    display:flex; flex-direction:column; justify-content:center; gap:18px;
+    padding:44px 28px;
+    position:relative; overflow:hidden;
+  }
+  @media (min-width:760px){ .hero-text{ padding:0 64px; } }
+
+  .cursor-glow{
+    position:absolute; width:320px; height:320px; border-radius:50%;
+    background:var(--violet); filter:blur(80px); opacity:0;
+    left:0; top:0; transform:translate(-50%,-50%);
+    transition:opacity 0.3s ease; pointer-events:none; z-index:0;
+  }
+  .hero-text:hover .cursor-glow{ opacity:0.4; }
+
+  .seal{ position:absolute; top:20px; right:20px; z-index:1; opacity:0.9; }
+  .seal-rotate{ transform-origin:65px 65px; }
+
+  .badge{
+    display:inline-block; width:fit-content;
+    background:var(--pink); color:var(--ink);
+    font-weight:700; font-size:12px; letter-spacing:0.16em; text-transform:uppercase;
+    padding:8px 14px; transform:rotate(-2deg);
+  }
+  h1.name{ margin:0; font-weight:700; font-size:clamp(46px, 9vw, 108px); line-height:0.94; letter-spacing:-0.02em; }
+  .role{ margin:0; font-weight:600; font-size:clamp(15px, 1.8vw, 19px); color:var(--lime); }
+
+  /* ---- MARQUEE ---- */
+  .marquee-section{ background:var(--violet); overflow:hidden; padding:16px 0; }
+  .marquee-track{ display:flex; width:max-content; }
+  .marquee-set{ display:flex; flex-shrink:0; }
+  .marquee-set span{
+    display:inline-flex; align-items:center; white-space:nowrap;
+    padding:0 22px; color:var(--cream); font-weight:700; text-transform:uppercase;
+    letter-spacing:0.08em; font-size:clamp(13px,1.6vw,16px);
+  }
+
+  /* ---- INTRODUCTION ---- */
+  .intro-section{ background:var(--turquoise); padding:clamp(48px, 8vw, 88px) 24px; overflow:hidden; }
+  .intro-inner{ max-width:800px; margin:0 auto; }
+  .intro-inner .eyebrow{ display:block; font-weight:700; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:10px; color:var(--ink); opacity:0.65; }
+  .intro-inner h2{ margin:0 0 24px; font-weight:700; font-size:clamp(30px, 5vw, 46px); letter-spacing:-0.01em; color:var(--ink); }
+  .video-frame{
+    position:relative; z-index:1; width:100%; aspect-ratio:16/9;
+    background:var(--ink); border:3px solid var(--ink); box-shadow:8px 8px 0 var(--violet); overflow:hidden;
+  }
+  .video-frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+  /* ---- BIO ---- */
+  .bio-section{ background:var(--cream); padding:clamp(48px, 8vw, 96px) 24px; overflow:hidden; }
+  .bio-inner{ max-width:700px; margin:0 auto; }
+  .divider{ display:block; width:60px; height:8px; background:var(--turquoise); margin-bottom:28px; }
+  .bio{ font-size:clamp(15px, 1.6vw, 17px); line-height:1.8; margin:0 0 20px; }
+  .bio-ku{ font-size:clamp(16px, 1.8vw, 19px); line-height:2; margin:0; }
+
+  /* ---- LINKS ---- */
+  .links-section{ background:var(--pink); padding:clamp(40px, 6vw, 64px) 24px; overflow:hidden; }
+  .links-inner{ max-width:960px; margin:0 auto; }
+  .links-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:14px; }
+  .link-pill{
+    display:flex; align-items:center; justify-content:center; gap:9px;
+    padding:16px 14px; background:var(--cream); border:3px solid var(--ink); box-shadow:5px 5px 0 var(--ink);
+    color:var(--ink); text-decoration:none; font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:0.02em;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .link-pill i{ font-size:15px; color:var(--violet); transition:transform 0.2s ease; }
+  .link-pill:hover, .link-pill:focus-visible{ transform:translate(5px, 5px); box-shadow:0 0 0 var(--ink); }
+  .link-pill:hover i{ transform:scale(1.25) rotate(-8deg); }
+
+  /* ---- CTA ---- */
+  .cta-section{ background:var(--violet); padding:clamp(48px, 7vw, 80px) 24px; display:flex; justify-content:center; overflow:hidden; }
+  .cta-inner{ display:flex; align-items:center; justify-content:center; gap:22px; flex-wrap:wrap; }
+  .primary-link{
+    display:inline-flex; align-items:center; gap:12px; padding:20px 34px;
+    background:var(--cream); color:var(--ink); border:3px solid var(--ink); box-shadow:8px 8px 0 var(--coral);
+    text-decoration:none; font-weight:700; font-size:15px; text-transform:uppercase; letter-spacing:0.03em;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .primary-link svg{ width:20px; height:20px; stroke:var(--ink); }
+  .primary-link:hover, .primary-link:focus-visible{ transform:translate(5px, 5px); box-shadow:0 0 0 var(--coral); }
+
+  .masterly-badge{
+    width:110px; height:110px; border-radius:50%; background:#ffffff;
+    border:3px solid var(--ink); box-shadow:5px 5px 0 var(--coral); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+  }
+  .masterly-badge svg{ width:78px; height:auto; display:block; }
+  .masterly-spin{ transform-origin:50% 50%; }
+
+  footer{ background:var(--ink); color:var(--cream); text-align:center; padding:20px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; opacity:0.7; }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-photo">
+    <img src="hardam-photo.jpg" alt="Portrait of Hardam Rasul">
+    <svg class="float-shape" style="top:8%; left:8%; --dur:7s;" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="var(--lime)"/></svg>
+    <svg class="float-shape" style="bottom:12%; right:10%; --dur:5.5s;" width="26" height="26" viewBox="0 0 24 24"><path d="M12 2 14 9 21 9 15.5 13.5 17.5 21 12 16.5 6.5 21 8.5 13.5 3 9 10 9Z" fill="var(--pink)"/></svg>
+    <svg class="float-shape" style="bottom:30%; left:12%; --dur:6.5s;" width="22" height="22" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="var(--violet)" stroke-width="2.5"/></svg>
+  </div>
+  <div class="hero-text">
+    <div class="cursor-glow"></div>
+    <svg class="seal" width="130" height="130" viewBox="0 0 130 130">
+      <defs><path id="sealCircle" d="M65,65 m-52,0 a52,52 0 1,1 104,0 a52,52 0 1,1 -104,0"/></defs>
+      <g class="seal-rotate">
+        <text font-size="9.5" font-weight="700" letter-spacing="1.5" fill="var(--cream)" opacity="0.85">
+          <textPath href="#sealCircle" startOffset="0%">EDUCATOR • MENTOR • MASTERLY • EDUCATOR • MENTOR • MASTERLY • </textPath>
+        </text>
+      </g>
+      <circle cx="65" cy="65" r="22" fill="var(--violet)"/>
+      <path d="M65 55 76 61 65 67 54 61Z" fill="var(--cream)"/>
+    </svg>
+    <span class="badge">Educator &amp; Mentor</span>
+    <h1 class="name">Hardam Rasul</h1>
+    <p class="role">12th Grade Wizari English Teacher — Bizhara High School</p>
+  </div>
+</section>
+
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-set">
+      <span>✦ English Teacher</span><span>✦ Wizari Mentor</span><span>✦ Masterly Co-Founder</span><span>✦ Student Academy Tutor</span>
+    </div>
+    <div class="marquee-set" aria-hidden="true">
+      <span>✦ English Teacher</span><span>✦ Wizari Mentor</span><span>✦ Masterly Co-Founder</span><span>✦ Student Academy Tutor</span>
+    </div>
+  </div>
+</div>
+
+<section class="intro-section">
+  <div class="blob" style="width:220px; height:220px; background:var(--violet); opacity:0.3; top:-60px; right:-60px; --dur:13s;"></div>
+  <div class="intro-inner reveal">
+    <span class="eyebrow">Watch</span>
+    <h2>Introduction</h2>
+    <div class="video-frame" id="introVideoFrame">
+      <iframe src="https://www.youtube.com/embed/C3xQZLQvPFg?rel=0&modestbranding=1" title="Introduction" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<section class="bio-section">
+  <div class="blob" style="width:260px; height:260px; background:var(--lime); opacity:0.25; bottom:-80px; left:-90px; --dur:16s;"></div>
+  <div class="bio-inner reveal">
+    <span class="divider"></span>
+    <p class="bio" lang="en">Hardam Rasul teaches 12th-grade English at Bizhara High School, preparing Wizari students for one of the most important exams of their academic lives. With over a decade in education — and as a tutor at Student Academy — he has guided countless students toward exam success. He is also a co-founder of Masterly, a digital space for growth and learning, carrying his approach to teaching beyond the classroom.</p>
+    <p class="bio bio-ku" lang="ku" dir="rtl">هەردەم ڕەسوڵ مامۆستایێ ئینگلیزیێ پۆلا ١٢ ئە لی دیبستانا بژارا، کو خوەندەکارێن ویزاریێ بۆ یەک ژ گرنگترین ئیمتیحانێن ژیانا وان یا ئەکادیمی ئامادە دکە. بی زێدەتری دەه سالان ئەزموونا خوە یا پەروەردەهیێ — و وەک مامۆستایێ تایبەت لی ستودێنت ئەکادمی — وی گەلەک خوەندەکار گەهاندنە سەر ڕێیا سەرکەفتنێ. ئەو هەروەها هەڤ-دامەزرێنەرێ ماستەرلی یە، جهەکی دیجیتال ژ بۆ گەشەدان و فێربوونێ، کو هەلوێستا خوە یا مامۆستاتیێ ڕادهینیتە دەرڤەیی دەرسخانێ.</p>
+  </div>
+</section>
+
+<section class="links-section">
+  <div class="blob" style="width:200px; height:200px; background:var(--violet); opacity:0.3; top:-50px; left:-60px; --dur:12s;"></div>
+  <div class="links-inner reveal">
+    <div class="links-grid">
+      <a class="link-pill" href="https://www.instagram.com/hardamrasul" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <i class="fa-brands fa-instagram"></i> Instagram
+      </a>
+      <a class="link-pill" href="https://www.tiktok.com/@hardamrasul5" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+        <i class="fa-brands fa-tiktok"></i> TikTok
+      </a>
+      <a class="link-pill" href="https://snapchat.com/t/2jhlFfmd" target="_blank" rel="noopener noreferrer" aria-label="Snapchat">
+        <i class="fa-brands fa-snapchat"></i> Snapchat
+      </a>
+      <a class="link-pill" href="https://www.youtube.com/@HardamRasul" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+        <i class="fa-brands fa-youtube"></i> YouTube
+      </a>
+      <a class="link-pill" href="https://t.me/hardamrasul" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+        <i class="fa-brands fa-telegram"></i> Telegram
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="blob" style="width:240px; height:240px; background:var(--pink); opacity:0.3; bottom:-70px; right:-70px; --dur:15s;"></div>
+  <div class="cta-inner reveal">
+    <a class="primary-link" href="https://masterlyiq.com" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5 2.5 9.5 12 14l9.5-4.5L12 5Z"/><path d="M6.5 11.7V16c0 1.4 2.4 2.5 5.5 2.5s5.5-1.1 5.5-2.5v-4.3"/><path d="M21.5 9.5v5"/></svg>
+      Visit Masterly
+    </a>
+    <div class="masterly-badge">
+      <svg class="masterly-spin" viewBox="0 0 143 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M98.7187 38.3735V16.6871C98.7187 10.0781 91.4652 6.12702 86.0281 9.77275L76.2543 21.6142C74.9799 22.7207 73.0491 22.5236 72.018 21.1797L56.9319 1.52485C51.5488 -2.31529 44.1267 1.53399 44.0456 8.20563L43.7187 43.8904H49.3515C54.0846 43.8904 57.9308 40.0242 57.9694 35.2263L58.0724 22.7324L69.8221 35.2132C71.8263 37.3427 75.1885 37.3101 77.1515 35.1414L86.2649 25.0785V36.4332C86.2649 40.6139 89.6078 44 93.7295 44H98.7148V38.3748H98.7174L98.7187 38.3735Z" fill="#7D25FF"/>
+        <path d="M19.218 53.3954C20.1198 53.3954 20.4299 53.678 20.4299 54.5829V72.3391C20.4299 73.2154 20.1198 73.498 19.218 73.498H16.147C15.2452 73.498 14.9636 73.2154 14.9636 72.3391V68.2957C14.9636 66.2604 15.386 63.8 16.2039 60.8883H15.8938C15.753 61.3693 15.4713 62.1328 15.0488 63.179C14.6264 64.2252 14.2879 65.0172 14.0062 65.5539L12.4287 68.7495C12.0902 69.3432 11.7802 69.5701 11.076 69.5701H9.18848C8.42751 69.5701 8.14586 69.4002 7.83579 68.7495L6.17302 65.5539C5.5813 64.5078 5.018 62.9521 4.42628 60.8883H4.14463C4.9056 63.9698 5.29965 66.4588 5.29965 68.3243V72.3391C5.29965 73.2154 4.98958 73.498 4.08779 73.498H1.21187C0.310072 73.498 0 73.2154 0 72.3391V54.5829C0 53.678 0.310072 53.3954 1.21187 53.3954H3.8604C4.84617 53.3954 5.10069 53.5652 5.52316 54.2717L10.173 63.4331L14.8228 54.3002C15.1897 53.5367 15.4713 53.3954 16.4002 53.3954H19.218Z" fill="#7D25FF"/>
+        <path d="M41.5368 72.3391C41.8184 73.1027 41.5368 73.4981 40.719 73.4981H37.6751C36.2384 73.4981 35.7875 73.2155 35.5614 72.3106L34.9129 70.2753H28.8264L28.1778 72.3106C27.8677 73.2155 27.4737 73.4981 26.121 73.4981H23.1624C22.373 73.4981 22.1198 73.1027 22.4014 72.3391L28.8832 54.4131C29.1365 53.621 29.475 53.424 30.3483 53.424H33.5602C34.378 53.424 34.772 53.6508 35.0253 54.3573L41.5342 72.3404L41.5368 72.3391ZM32.6028 62.5283C32.2643 61.3979 32.0395 59.8993 32.0111 59.1357L31.9827 58.5705H31.701C31.7294 59.9278 31.5318 61.228 31.1661 62.5011L30.1235 65.8379H33.6454L32.6028 62.5296V62.5283Z" fill="#7D25FF"/>
+        <path d="M43.9592 54.7242C45.4243 53.5652 47.4811 53 50.1025 53C54.2446 53 56.6399 54.2445 57.9642 56.9591C58.3311 57.6941 58.105 58.2308 57.2885 58.5419L54.4707 59.7579C53.7097 60.0976 53.3996 59.9848 52.9487 59.1642C52.4694 58.1751 51.5121 57.6941 50.1025 57.6941C48.3274 57.6941 47.4256 58.1751 47.4256 59.1642C47.4256 60.2674 48.609 60.5785 51.1167 60.8883C52.8635 61.1139 53.5405 61.1995 55.1464 61.8502C55.9074 62.1614 56.4991 62.5568 56.95 62.9807C57.8518 63.857 58.6127 65.4412 58.6127 67.4764C58.6127 69.5117 57.7949 71.0674 56.189 72.1978C54.5547 73.3567 52.441 73.9219 49.8764 73.9219C45.4812 73.9219 42.7474 72.4519 41.6763 69.5389C41.3663 68.6626 41.6195 68.2944 42.4373 67.9833L45.0858 67.0214C45.9036 66.7103 46.3261 66.8516 46.7486 67.6437C47.2563 68.6328 48.3261 69.1423 49.9333 69.1423C51.9346 69.1423 52.9487 68.6056 52.9487 67.5309C52.9487 66.5132 51.8777 66.1736 49.6516 65.8625C48.4966 65.6926 48.4966 65.7212 47.3403 65.4671C46.8054 65.3828 46.4101 65.2687 46.1284 65.1845C45.5367 64.9861 44.4657 64.5907 43.9308 64.1668C43.3959 63.7429 42.6634 63.0922 42.3533 62.3001C42.0148 61.5365 41.7332 60.5474 41.7332 59.3314C41.7332 57.4374 42.4657 55.8818 43.9592 54.7229V54.7242Z" fill="#7D25FF"/>
+        <path d="M74.4781 53.424C75.3799 53.424 75.69 53.7351 75.69 54.6114V57.1562C75.69 58.061 75.3799 58.3721 74.4781 58.3721H70.3076V72.3119C70.3076 73.1882 69.9976 73.4994 69.0958 73.4994H65.9111C65.0093 73.4994 64.7276 73.1882 64.7276 72.3119V58.3721H60.5287C59.6269 58.3721 59.3453 58.061 59.3453 57.1562V54.6114C59.3453 53.7351 59.6269 53.424 60.5287 53.424H74.4768H74.4781Z" fill="#7D25FF"/>
+        <path d="M90.4274 53.424C91.3292 53.424 91.6393 53.7351 91.6393 54.6114V57.1562C91.6393 58.061 91.3292 58.3721 90.4274 58.3721H82.9883V60.8884H88.9339C89.8357 60.8884 90.1458 61.1995 90.1458 62.0758V64.6206C90.1458 65.5255 89.8357 65.8366 88.9339 65.8366H82.9883V68.5512H90.6807C91.554 68.5512 91.8641 68.8338 91.8641 69.7386V72.3119C91.8641 73.1882 91.554 73.4994 90.6807 73.4994H78.6201C77.7183 73.4994 77.4083 73.1882 77.4083 72.3119V54.6114C77.4083 53.7351 77.7183 53.424 78.6201 53.424H90.4274Z" fill="#7D25FF"/>
+        <path d="M103.22 53.424C107.532 53.424 110.237 55.9117 110.237 60.2376C110.237 62.9807 109.223 64.9317 107.193 66.0622C107.503 66.429 107.757 66.8542 107.954 67.2781L110.49 72.1136C110.913 72.8771 110.66 73.4994 109.758 73.4994H106.714C105.249 73.4994 104.572 73.1597 104.121 72.1421L102.317 68.2686C101.783 67.2509 101.303 66.827 100.204 66.827H99.5552V72.3119C99.5552 73.1882 99.2735 73.4994 98.3717 73.4994H95.187C94.2852 73.4994 93.9752 73.1882 93.9752 72.3119V54.6114C93.9752 53.7351 94.2852 53.424 95.187 53.424H103.218H103.22ZM102.6 58.3721H99.5565V62.1044H102.6C103.755 62.1044 104.461 61.3693 104.461 60.2104C104.461 59.0514 103.812 58.3721 102.6 58.3721Z" fill="#7D25FF"/>
+        <path d="M117.001 53.424C117.902 53.424 118.184 53.7351 118.184 54.6114V68.5512H124.975C125.848 68.5512 126.158 68.8338 126.158 69.7386V72.3119C126.158 73.1882 125.848 73.4994 124.975 73.4994H113.816C112.914 73.4994 112.604 73.1882 112.604 72.3119V54.6114C112.604 53.7351 112.914 53.424 113.816 53.424H117.001Z" fill="#7D25FF"/>
+        <path d="M141.629 53.424C142.447 53.424 142.644 53.9606 142.221 54.6114L135.712 65.7238V72.3119C135.712 73.1882 135.431 73.4994 134.529 73.4994H131.344C130.442 73.4994 130.132 73.1882 130.132 72.3119V65.7238L123.65 54.6114C123.228 53.9606 123.426 53.424 124.242 53.424H127.623C128.384 53.424 128.891 53.481 129.174 53.5938C129.427 53.7066 129.708 53.9892 129.963 54.4701L132.978 60.2376L136.078 54.4701C136.613 53.5367 136.923 53.424 138.388 53.424H141.628H141.629Z" fill="#7D25FF"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<footer>Hardam Rasul</footer>
+
+<script>
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reveals = document.querySelectorAll('.reveal');
+  if (reduced || !('IntersectionObserver' in window)) {
+    reveals.forEach(function(el){ el.classList.add('is-visible'); });
+  } else {
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        entry.target.classList.toggle('is-visible', entry.isIntersecting);
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(function(el){ observer.observe(el); });
+  }
+
+  if (!reduced && window.matchMedia('(pointer:fine)').matches) {
+    var heroText = document.querySelector('.hero-text');
+    var glow = document.querySelector('.cursor-glow');
+    if (heroText && glow) {
+      heroText.addEventListener('mousemove', function(e){
+        var rect = heroText.getBoundingClientRect();
+        glow.style.left = (e.clientX - rect.left) + 'px';
+        glow.style.top = (e.clientY - rect.top) + 'px';
+      });
+    }
+  }
+
+  var introFrame = document.getElementById('introVideoFrame');
+  if (introFrame) {
+    introFrame.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+  }
+</script>
+
+</body>
+</html>
