@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hardam Rasul — English Educator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root{
+    --cream:#efe8d6;
+    --pink:#fd97fb;
+    --lime:#eeff4f;
+    --turquoise:#1fe6d1;
+    --coral:#fe673a;
+    --violet:#7d27fc;
+    --ink:#171310;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    font-family:'Space Grotesk', Arial, sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    overflow-x:hidden;
+  }
+  [lang="ku"]{ font-family:'Noto Naskh Arabic', serif; direction:rtl; text-align:right; unicode-bidi:isolate; }
+  a:focus-visible{ outline:3px solid var(--ink); outline-offset:2px; }
+  section{ position:relative; }
+
+  /* ---- repeatable reveal-on-scroll ---- */
+  .reveal{
+    position:relative; z-index:1;
+    opacity:0;
+    transform:translateY(26px);
+    transition:opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+
+  @media (prefers-reduced-motion: no-preference){
+    .hero-photo{ animation:fadeIn 1s ease-out both; }
+    .hero-text > *{ animation:fadeUp 0.9s ease-out both; }
+    .hero-text .badge{ animation-delay:0.05s; }
+    .hero-text .name{ animation-delay:0.18s; }
+    .hero-text .role{ animation-delay:0.32s; }
+    .badge{ animation:fadeUp 0.9s ease-out both, badgeFloat 5s ease-in-out 1s infinite; }
+    .float-shape{ animation:floatShape var(--dur,6s) ease-in-out infinite; }
+    .seal-rotate{ animation:sealSpin 18s linear infinite; }
+    .blob{ animation:blobDrift var(--dur,14s) ease-in-out infinite; }
+    .marquee-track{ animation:marqueeScroll 20s linear infinite; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .marquee-track{ animation:none; }
+  }
+  @keyframes fadeIn{ from{ opacity:0; } to{ opacity:1; } }
+  @keyframes fadeUp{ from{ opacity:0; transform:translateY(18px); } to{ opacity:1; transform:translateY(0); } }
+  @keyframes badgeFloat{ 0%,100%{ transform:rotate(-2deg); } 50%{ transform:rotate(-4deg); } }
+  @keyframes floatShape{ 0%,100%{ transform:translateY(0) rotate(0deg); } 50%{ transform:translateY(-14px) rotate(12deg); } }
+  @keyframes sealSpin{ from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }
+  @keyframes blobDrift{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(20px,-24px) scale(1.08); } }
+  @keyframes marqueeScroll{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+
+  .blob{ position:absolute; border-radius:50%; filter:blur(70px); pointer-events:none; z-index:0; }
+
+  /* ---- HERO ---- */
+  .hero{ display:flex; flex-direction:column; min-height:100dvh; }
+  @media (min-width:760px){ .hero{ flex-direction:row; } }
+
+  .hero-photo{ order:1; min-height:44vh; flex:1 1 50%; position:relative; overflow:hidden; }
+  .hero-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  .float-shape{ position:absolute; z-index:1; --dur:6s; }
+
+  .hero-text{
+    order:2; flex:1 1 50%;
+    background:var(--ink); color:var(--cream);
+    display:flex; flex-direction:column; justify-content:center; gap:18px;
+    padding:44px 28px;
+    position:relative; overflow:hidden;
+  }
+  @media (min-width:760px){ .hero-text{ padding:0 64px; } }
+
+  .cursor-glow{
+    position:absolute; width:320px; height:320px; border-radius:50%;
+    background:var(--violet); filter:blur(80px); opacity:0;
+    left:0; top:0; transform:translate(-50%,-50%);
+    transition:opacity 0.3s ease; pointer-events:none; z-index:0;
+  }
+  .hero-text:hover .cursor-glow{ opacity:0.4; }
+
+  .seal{ position:absolute; top:20px; right:20px; z-index:1; opacity:0.9; }
+  .seal-rotate{ transform-origin:65px 65px; }
+
+  .badge{
+    display:inline-block; width:fit-content;
+    background:var(--pink); color:var(--ink);
+    font-weight:700; font-size:12px; letter-spacing:0.16em; text-transform:uppercase;
+    padding:8px 14px; transform:rotate(-2deg);
+  }
+  h1.name{ margin:0; font-weight:700; font-size:clamp(46px, 9vw, 108px); line-height:0.94; letter-spacing:-0.02em; }
+  .role{ margin:0; font-weight:600; font-size:clamp(15px, 1.8vw, 19px); color:var(--lime); }
+
+  /* ---- MARQUEE ---- */
+  .marquee-section{ background:var(--violet); overflow:hidden; padding:16px 0; }
+  .marquee-track{ display:flex; width:max-content; }
+  .marquee-set{ display:flex; flex-shrink:0; }
+  .marquee-set span{
+    display:inline-flex; align-items:center; white-space:nowrap;
+    padding:0 22px; color:var(--cream); font-weight:700; text-transform:uppercase;
+    letter-spacing:0.08em; font-size:clamp(13px,1.6vw,16px);
+  }
+
+  /* ---- INTRODUCTION ---- */
+  .intro-section{ background:var(--turquoise); padding:clamp(48px, 8vw, 88px) 24px; overflow:hidden; }
+  .intro-inner{ max-width:800px; margin:0 auto; }
+  .intro-inner .eyebrow{ display:block; font-weight:700; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:10px; color:var(--ink); opacity:0.65; }
+  .intro-inner h2{ margin:0 0 24px; font-weight:700; font-size:clamp(30px, 5vw, 46px); letter-spacing:-0.01em; color:var(--ink); }
+  .video-frame{
+    position:relative; z-index:1; width:100%; aspect-ratio:16/9;
+    background:var(--ink); border:3px solid var(--ink); box-shadow:8px 8px 0 var(--violet); overflow:hidden;
+  }
+  .video-frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+  /* ---- BIO ---- */
+  .bio-section{ background:var(--cream); padding:clamp(48px, 8vw, 96px) 24px; overflow:hidden; }
+  .bio-inner{ max-width:700px; margin:0 auto; }
+  .divider{ display:block; width:60px; height:8px; background:var(--turquoise); margin-bottom:28px; }
+  .bio{ font-size:clamp(15px, 1.6vw, 17px); line-height:1.8; margin:0 0 20px; }
+  .bio-ku{ font-size:clamp(16px, 1.8vw, 19px); line-height:2; margin:0; }
+
+  /* ---- LINKS ---- */
+  .links-section{ background:var(--pink); padding:clamp(40px, 6vw, 64px) 24px; overflow:hidden; }
+  .links-inner{ max-width:960px; margin:0 auto; }
+  .links-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:14px; }
+  .link-pill{
+    display:flex; align-items:center; justify-content:center; gap:9px;
+    padding:16px 14px; background:var(--cream); border:3px solid var(--ink); box-shadow:5px 5px 0 var(--ink);
+    color:var(--ink); text-decoration:none; font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:0.02em;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .link-pill i{ font-size:15px; color:var(--violet); transition:transform 0.2s ease; }
+  .link-pill:hover, .link-pill:focus-visible{ transform:translate(5px, 5px); box-shadow:0 0 0 var(--ink); }
+  .link-pill:hover i{ transform:scale(1.25) rotate(-8deg); }
+
+  /* ---- CTA ---- */
+  .cta-section{ background:var(--coral); padding:clamp(48px, 7vw, 80px) 24px; display:flex; justify-content:center; overflow:hidden; }
+  .primary-link{
+    display:inline-flex; align-items:center; gap:12px; padding:20px 34px;
+    background:var(--cream); color:var(--ink); border:3px solid var(--ink); box-shadow:8px 8px 0 var(--violet);
+    text-decoration:none; font-weight:700; font-size:15px; text-transform:uppercase; letter-spacing:0.03em;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .primary-link svg{ width:20px; height:20px; stroke:var(--ink); }
+  .primary-link:hover, .primary-link:focus-visible{ transform:translate(5px, 5px); box-shadow:0 0 0 var(--violet); }
+
+  footer{ background:var(--ink); color:var(--cream); text-align:center; padding:20px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; opacity:0.7; }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-photo">
+    <img src="hardam-photo.jpg" alt="Portrait of Hardam Rasul">
+    <svg class="float-shape" style="top:8%; left:8%; --dur:7s;" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="var(--lime)"/></svg>
+    <svg class="float-shape" style="bottom:12%; right:10%; --dur:5.5s;" width="26" height="26" viewBox="0 0 24 24"><path d="M12 2 14 9 21 9 15.5 13.5 17.5 21 12 16.5 6.5 21 8.5 13.5 3 9 10 9Z" fill="var(--pink)"/></svg>
+    <svg class="float-shape" style="bottom:30%; left:12%; --dur:6.5s;" width="22" height="22" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="var(--violet)" stroke-width="2.5"/></svg>
+  </div>
+  <div class="hero-text">
+    <div class="cursor-glow"></div>
+    <svg class="seal" width="130" height="130" viewBox="0 0 130 130">
+      <defs><path id="sealCircle" d="M65,65 m-52,0 a52,52 0 1,1 104,0 a52,52 0 1,1 -104,0"/></defs>
+      <g class="seal-rotate">
+        <text font-size="9.5" font-weight="700" letter-spacing="1.5" fill="var(--cream)" opacity="0.85">
+          <textPath href="#sealCircle" startOffset="0%">EDUCATOR • MENTOR • MASTERLY • EDUCATOR • MENTOR • MASTERLY • </textPath>
+        </text>
+      </g>
+      <circle cx="65" cy="65" r="22" fill="var(--violet)"/>
+      <path d="M65 55 76 61 65 67 54 61Z" fill="var(--cream)"/>
+    </svg>
+    <span class="badge">Educator &amp; Mentor</span>
+    <h1 class="name">Hardam Rasul</h1>
+    <p class="role">12th Grade Wizari English Teacher — Bizhara High School</p>
+  </div>
+</section>
+
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-set">
+      <span>✦ English Teacher</span><span>✦ Wizari Mentor</span><span>✦ Masterly Co-Founder</span><span>✦ Student Academy Tutor</span>
+    </div>
+    <div class="marquee-set" aria-hidden="true">
+      <span>✦ English Teacher</span><span>✦ Wizari Mentor</span><span>✦ Masterly Co-Founder</span><span>✦ Student Academy Tutor</span>
+    </div>
+  </div>
+</div>
+
+<section class="intro-section">
+  <div class="blob" style="width:220px; height:220px; background:var(--violet); opacity:0.3; top:-60px; right:-60px; --dur:13s;"></div>
+  <div class="intro-inner reveal">
+    <span class="eyebrow">Watch</span>
+    <h2>Introduction</h2>
+    <div class="video-frame">
+      <iframe src="https://www.youtube.com/embed/QhEaMK3ABwc?start=168" title="Introduction" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<section class="bio-section">
+  <div class="blob" style="width:260px; height:260px; background:var(--lime); opacity:0.25; bottom:-80px; left:-90px; --dur:16s;"></div>
+  <div class="bio-inner reveal">
+    <span class="divider"></span>
+    <p class="bio" lang="en">Hardam Rasul teaches 12th-grade English at Bizhara High School, preparing Wizari students for one of the most important exams of their academic lives. With over a decade in education — and as a tutor at Student Academy — he has guided countless students toward exam success. He is also a co-founder of Masterly, a digital space for growth and learning, carrying his approach to teaching beyond the classroom.</p>
+    <p class="bio bio-ku" lang="ku" dir="rtl">هەردەم ڕەسوڵ مامۆستایێ ئینگلیزیێ پۆلا ١٢ ئە لی دیبستانا بژارا، کو خوەندەکارێن ویزاریێ بۆ یەک ژ گرنگترین ئیمتیحانێن ژیانا وان یا ئەکادیمی ئامادە دکە. بی زێدەتری دەه سالان ئەزموونا خوە یا پەروەردەهیێ — و وەک مامۆستایێ تایبەت لی ستودێنت ئەکادمی — وی گەلەک خوەندەکار گەهاندنە سەر ڕێیا سەرکەفتنێ. ئەو هەروەها هەڤ-دامەزرێنەرێ ماستەرلی یە، جهەکی دیجیتال ژ بۆ گەشەدان و فێربوونێ، کو هەلوێستا خوە یا مامۆستاتیێ ڕادهینیتە دەرڤەیی دەرسخانێ.</p>
+  </div>
+</section>
+
+<section class="links-section">
+  <div class="blob" style="width:200px; height:200px; background:var(--violet); opacity:0.3; top:-50px; left:-60px; --dur:12s;"></div>
+  <div class="links-inner reveal">
+    <div class="links-grid">
+      <a class="link-pill" href="https://www.instagram.com/hardamrasul" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <i class="fa-brands fa-instagram"></i> Instagram
+      </a>
+      <a class="link-pill" href="https://www.tiktok.com/@hardamrasul5" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+        <i class="fa-brands fa-tiktok"></i> TikTok
+      </a>
+      <a class="link-pill" href="https://snapchat.com/t/2jhlFfmd" target="_blank" rel="noopener noreferrer" aria-label="Snapchat">
+        <i class="fa-brands fa-snapchat"></i> Snapchat
+      </a>
+      <a class="link-pill" href="https://www.youtube.com/@HardamRasul" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+        <i class="fa-brands fa-youtube"></i> YouTube
+      </a>
+      <a class="link-pill" href="https://t.me/hardamrasul" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+        <i class="fa-brands fa-telegram"></i> Telegram
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="blob" style="width:240px; height:240px; background:var(--pink); opacity:0.3; bottom:-70px; right:-70px; --dur:15s;"></div>
+  <a class="primary-link reveal" href="https://masterlyiq.com" target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5 2.5 9.5 12 14l9.5-4.5L12 5Z"/><path d="M6.5 11.7V16c0 1.4 2.4 2.5 5.5 2.5s5.5-1.1 5.5-2.5v-4.3"/><path d="M21.5 9.5v5"/></svg>
+    Visit Masterly
+  </a>
+</section>
+
+<footer>Hardam Rasul</footer>
+
+<script>
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reveals = document.querySelectorAll('.reveal');
+  if (reduced || !('IntersectionObserver' in window)) {
+    reveals.forEach(function(el){ el.classList.add('is-visible'); });
+  } else {
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        entry.target.classList.toggle('is-visible', entry.isIntersecting);
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(function(el){ observer.observe(el); });
+  }
+
+  if (!reduced && window.matchMedia('(pointer:fine)').matches) {
+    var heroText = document.querySelector('.hero-text');
+    var glow = document.querySelector('.cursor-glow');
+    if (heroText && glow) {
+      heroText.addEventListener('mousemove', function(e){
+        var rect = heroText.getBoundingClientRect();
+        glow.style.left = (e.clientX - rect.left) + 'px';
+        glow.style.top = (e.clientY - rect.top) + 'px';
+      });
+    }
+  }
+</script>
+
+</body>
+</html>
